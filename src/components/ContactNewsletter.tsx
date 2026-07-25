@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-const WA_PHONE = "91XXXXXXXXXX";
+const WA_PHONE = "919751728466";
 
 const validateEmail = (value: string) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
