@@ -1,28 +1,63 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
+
+const WA_PHONE = "91XXXXXXXXXX";
+
+const validateEmail = (value: string) => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailPattern.test(value.trim());
+};
 
 export const ContactNewsletter = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [contactErrors, setContactErrors] = useState({ name: "", email: "", message: "" });
+  const [contactLoading, setContactLoading] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
 
-  const handleContactSubmit = async (e: React.FormEvent) => {
+  const handleContactInput = (field: "name" | "email" | "message", value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setContactErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      alert("Thank you for your message! We'll get back to you soon.");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      console.error("Error submitting contact form:", error);
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedMessage = formData.message.trim();
+    const errors = {
+      name: trimmedName ? "" : "Please enter your name.",
+      email: trimmedEmail ? "" : "Please enter your email.",
+      message: trimmedMessage ? "" : "Please enter your message.",
+    };
+
+    if (trimmedEmail && !validateEmail(trimmedEmail)) {
+      errors.email = "Please enter a valid email address.";
     }
+
+    setContactErrors(errors);
+
+    const hasErrors = Object.values(errors).some(Boolean);
+    if (hasErrors) {
+      return;
+    }
+
+    setContactLoading(true);
+
+    const whatsappMessage = `Hello,\n\nI would like to contact you.\n\n*Name:*\n${trimmedName}\n\n*Email:*\n${trimmedEmail}\n\n*Message:*\n${trimmedMessage}\n\nThank you.`;
+    const url = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
+
+    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    if (newWindow) {
+      newWindow.focus();
+    }
+
+    setContactLoading(false);
+    setFormData({ name: "", email: "", message: "" });
   };
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
@@ -152,12 +187,14 @@ export const ContactNewsletter = () => {
                   </label>
                   <input
                     type="text"
-                    required
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 border-accent-primary/30 rounded-full text-text-primary placeholder-text-muted focus:outline-none focus:border-accent-primary transition-all text-sm sm:text-base"
+                    onChange={(e) => handleContactInput("name", e.target.value)}
+                    className={`w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 rounded-full text-text-primary placeholder-text-muted focus:outline-none transition-all text-sm sm:text-base ${contactErrors.name ? "border-red-500/60 focus:border-red-500" : "border-accent-primary/30 focus:border-accent-primary"}`}
                     placeholder="John Doe"
                   />
+                  {contactErrors.name ? (
+                    <p className="mt-2 text-sm text-red-600">{contactErrors.name}</p>
+                  ) : null}
                 </div>
                 <div>
                   <label className="block text-text-secondary mb-2 text-sm font-medium">
@@ -165,31 +202,42 @@ export const ContactNewsletter = () => {
                   </label>
                   <input
                     type="email"
-                    required
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 border-warm-gold/30 rounded-full text-text-primary placeholder-text-muted focus:outline-none focus:border-warm-gold transition-all text-sm sm:text-base"
+                    onChange={(e) => handleContactInput("email", e.target.value)}
+                    className={`w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 rounded-full text-text-primary placeholder-text-muted focus:outline-none transition-all text-sm sm:text-base ${contactErrors.email ? "border-red-500/60 focus:border-red-500" : "border-warm-gold/30 focus:border-warm-gold"}`}
                     placeholder="john@example.com"
                   />
+                  {contactErrors.email ? (
+                    <p className="mt-2 text-sm text-red-600">{contactErrors.email}</p>
+                  ) : null}
                 </div>
                 <div>
                   <label className="block text-text-secondary mb-2 text-sm font-medium">
                     Your Message
                   </label>
                   <textarea
-                    required
                     rows={4}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 border-terracotta/30 rounded-3xl text-text-primary placeholder-text-muted focus:outline-none focus:border-terracotta resize-none transition-all text-sm sm:text-base"
+                    onChange={(e) => handleContactInput("message", e.target.value)}
+                    className={`w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 rounded-3xl text-text-primary placeholder-text-muted focus:outline-none resize-none transition-all text-sm sm:text-base ${contactErrors.message ? "border-red-500/60 focus:border-red-500" : "border-terracotta/30 focus:border-terracotta"}`}
                     placeholder="Write your message here..."
                   />
+                  {contactErrors.message ? (
+                    <p className="mt-2 text-sm text-red-600">{contactErrors.message}</p>
+                  ) : null}
                 </div>
                 <button
                   type="submit"
-                  className="w-full py-3 sm:py-4 bg-gradient-to-r from-accent-primary to-terracotta text-background rounded-full font-semibold hover:from-terracotta hover:to-deep-purple transition-all text-base sm:text-lg shadow-glow-terracotta"
+                  disabled={
+                    contactLoading ||
+                    !formData.name.trim() ||
+                    !formData.email.trim() ||
+                    !formData.message.trim() ||
+                    !!contactErrors.email
+                  }
+                  className={`w-full py-3 sm:py-4 rounded-full font-semibold transition-all text-base sm:text-lg shadow-glow-terracotta ${contactLoading || !formData.name.trim() || !formData.email.trim() || !formData.message.trim() || !!contactErrors.email ? "bg-slate-300 text-slate-600 cursor-not-allowed" : "bg-gradient-to-r from-accent-primary to-terracotta text-background hover:from-terracotta hover:to-deep-purple"}`}
                 >
-                  Send Message
+                  {contactLoading ? "Preparing WhatsApp..." : "Send Message"}
                 </button>
               </form>
             </div>
