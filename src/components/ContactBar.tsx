@@ -28,10 +28,10 @@ export const ContactBar = () => {
             <div className="flex items-center gap-2">
               <MapPin className="w-5 h-5" />
               <div className="text-center md:text-left">
-                Vidyut Villas,<br />
-                No:4 Rejeev Street,<br />
-                OMR, Kottivakkam,<br />
-                Chennai - 600041
+                Rajiv Gandhi Salai, OMR,<br />
+                Kottivakkam, Greater Chennai,<br />
+                Chennai, Tamil Nadu,<br />
+                600041
               </div>
             </div>
           </div>

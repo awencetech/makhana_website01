@@ -79,10 +79,10 @@ export const ContactNewsletter = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-accent-secondary mb-1 text-sm sm:text-base">Address</h4>
                   <p className="text-text-secondary text-sm sm:text-base">
-                    4, Rajiv Gandhi Salai<br />
-                    Gandhi Nagar, Thoraipakkam<br />
-                    Greater Chennai, Tamil Nadu<br />
-                    600097, India
+                    Rajiv Gandhi Salai, OMR<br />
+                    Kottivakkam, Greater Chennai<br />
+                    Chennai, Tamil Nadu<br />
+                    600041, India
                   </p>
                 </div>
               </div>
@@ -229,7 +229,7 @@ export const ContactNewsletter = () => {
               <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-accent-primary/30">
                 <iframe
                   title="Google Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.987654321098!2d80.2321536!3d12.9375489!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525cf8e64b0a9f:0x34a5056bba58206b!2s4%2C%20Rajiv%20Gandhi%20Salai%2C%20Gandhi%20Nagar%2C%20Thoraipakkam%2C%20Greater%20Chennai%2C%20Tamil%20Nadu%20600097!5e0!3m2!1sen!2sin!4v1721627000000!5m2!1sen!2sin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15546.837683473355!2d80.23968055!3d12.93904875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c9e7c3e8e3d%3A0x6c9f3c7d3b6a2e1f!2sKottivakkam%2C%20Rajiv%20Gandhi%20Salai%2C%20OMR%2C%20Chennai%2C%20Tamil%20Nadu%20600041!5e0!3m2!1sen!2sin!4v1721900000000!5m2!1sen!2sin"
                   width="100%"
                   height="350"
                   style={{ border: 0 }}
@@ -256,16 +256,16 @@ export const ContactNewsletter = () => {
                   <div className="flex-1">
                     <h4 className="font-semibold text-accent-secondary mb-1 text-base sm:text-lg">Complete Address</h4>
                     <p className="text-text-secondary text-sm sm:text-base">
-                      4, Rajiv Gandhi Salai<br />
-                      Gandhi Nagar, Thoraipakkam<br />
-                      Greater Chennai, Tamil Nadu<br />
-                      600097, India
+                      Rajiv Gandhi Salai, OMR<br />
+                      Kottivakkam, Greater Chennai<br />
+                      Chennai, Tamil Nadu<br />
+                      600041, India
                     </p>
                   </div>
                 </div>
 
                 <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=12.9375489,80.2347025"
+                  href="https://www.google.com/maps/dir/?api=1&destination=12.9391,80.2433"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-accent-primary to-terracotta text-white rounded-full font-semibold hover:from-terracotta hover:to-deep-purple transition-all shadow-glow-terracotta text-base sm:text-lg w-full sm:w-auto"

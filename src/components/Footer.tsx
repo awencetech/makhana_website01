@@ -90,10 +90,10 @@ export const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div className="text-sm sm:text-base">
-                  <p>4, Rajiv Gandhi Salai,</p>
-                  <p>Gandhi Nagar, Thoraipakkam,</p>
-                  <p>Greater Chennai, Tamil Nadu,</p>
-                  <p>600097</p>
+                  <p>Rajiv Gandhi Salai, OMR,</p>
+                  <p>Kottivakkam, Greater Chennai,</p>
+                  <p>Chennai, Tamil Nadu,</p>
+                  <p>600041</p>
                 </div>
               </div>
             </div>
