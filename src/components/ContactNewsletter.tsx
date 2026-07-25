@@ -3,15 +3,22 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-const WA_PHONE = "919751728466";
+const WA_PHONE = "919751278466";
 
 const validateEmail = (value: string) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailPattern.test(value.trim());
 };
 
+const sendToWhatsApp = (name: string, email: string, messageText: string) => {
+  const message = `Hello,\n\nI would like to contact you.\n\n*Name:*\n${name}\n\n*Email:*\n${email}\n\n*Message:*\n${messageText}\n\nThank you.`;
+  const url = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+  return window.open(url, "_blank", "noopener,noreferrer");
+};
+
 export const ContactNewsletter = () => {
   const ref = useRef(null);
+  const contactFormRef = useRef<HTMLFormElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [contactErrors, setContactErrors] = useState({ name: "", email: "", message: "" });
@@ -41,6 +48,11 @@ export const ContactNewsletter = () => {
 
     setContactErrors(errors);
 
+    const form = contactFormRef.current;
+    if (form && !form.checkValidity()) {
+      form.reportValidity();
+    }
+
     const hasErrors = Object.values(errors).some(Boolean);
     if (hasErrors) {
       return;
@@ -48,10 +60,7 @@ export const ContactNewsletter = () => {
 
     setContactLoading(true);
 
-    const whatsappMessage = `Hello,\n\nI would like to contact you.\n\n*Name:*\n${trimmedName}\n\n*Email:*\n${trimmedEmail}\n\n*Message:*\n${trimmedMessage}\n\nThank you.`;
-    const url = `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(whatsappMessage)}`;
-
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+    const newWindow = sendToWhatsApp(trimmedName, trimmedEmail, trimmedMessage);
     if (newWindow) {
       newWindow.focus();
     }
@@ -137,7 +146,7 @@ export const ContactNewsletter = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-terracotta mb-1 text-sm sm:text-base">Phone</h4>
                   <p className="text-text-secondary text-sm sm:text-base">
-                    +91 9751728466<br />
+                    +91 9751278466<br />
                     +91 967704466
                   </p>
                 </div>
@@ -180,13 +189,15 @@ export const ContactNewsletter = () => {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-terracotta mb-6 sm:mb-8">
                 Send us a Message
               </h3>
-              <form onSubmit={handleContactSubmit} className="space-y-5 sm:space-y-6">
+              <form ref={contactFormRef} onSubmit={handleContactSubmit} className="space-y-5 sm:space-y-6" noValidate>
                 <div>
-                  <label className="block text-text-secondary mb-2 text-sm font-medium">
+                  <label className="block text-text-secondary mb-2 text-sm font-medium" htmlFor="contact-name">
                     Your Name
                   </label>
                   <input
+                    id="contact-name"
                     type="text"
+                    required
                     value={formData.name}
                     onChange={(e) => handleContactInput("name", e.target.value)}
                     className={`w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 rounded-full text-text-primary placeholder-text-muted focus:outline-none transition-all text-sm sm:text-base ${contactErrors.name ? "border-red-500/60 focus:border-red-500" : "border-accent-primary/30 focus:border-accent-primary"}`}
@@ -197,11 +208,13 @@ export const ContactNewsletter = () => {
                   ) : null}
                 </div>
                 <div>
-                  <label className="block text-text-secondary mb-2 text-sm font-medium">
+                  <label className="block text-text-secondary mb-2 text-sm font-medium" htmlFor="contact-email">
                     Your Email
                   </label>
                   <input
+                    id="contact-email"
                     type="email"
+                    required
                     value={formData.email}
                     onChange={(e) => handleContactInput("email", e.target.value)}
                     className={`w-full px-4 sm:px-5 py-3 bg-bg-secondary border-2 rounded-full text-text-primary placeholder-text-muted focus:outline-none transition-all text-sm sm:text-base ${contactErrors.email ? "border-red-500/60 focus:border-red-500" : "border-warm-gold/30 focus:border-warm-gold"}`}
@@ -212,10 +225,12 @@ export const ContactNewsletter = () => {
                   ) : null}
                 </div>
                 <div>
-                  <label className="block text-text-secondary mb-2 text-sm font-medium">
+                  <label className="block text-text-secondary mb-2 text-sm font-medium" htmlFor="contact-message">
                     Your Message
                   </label>
                   <textarea
+                    id="contact-message"
+                    required
                     rows={4}
                     value={formData.message}
                     onChange={(e) => handleContactInput("message", e.target.value)}

@@ -15,7 +15,7 @@ export const ContactBar = () => {
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="flex items-center gap-2">
               <Phone className="w-5 h-5" />
-              <span>+91 9751274826</span>
+              <span>+91 9751278466</span>
             </div>
             <div className="flex items-center gap-2">
               <Phone className="w-5 h-5" />

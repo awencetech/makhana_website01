@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   // Replace with your actual WhatsApp number
-  const WHATSAPP_NUMBER = "919751728466";
+  const WHATSAPP_NUMBER = "919751278466";
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=Hi! I'm interested in your premium makhana.`;
 
   return (
