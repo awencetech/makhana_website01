@@ -3,7 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 
-const WA_PHONE = "919751278466";
+const WA_PHONE = "919751274826";
 
 const validateEmail = (value: string) => {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,7 +23,6 @@ export const ContactNewsletter = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [contactErrors, setContactErrors] = useState({ name: "", email: "", message: "" });
   const [contactLoading, setContactLoading] = useState(false);
-  const [newsletterEmail, setNewsletterEmail] = useState("");
 
   const handleContactInput = (field: "name" | "email" | "message", value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -69,21 +68,6 @@ export const ContactNewsletter = () => {
     setFormData({ name: "", email: "", message: "" });
   };
 
-  const handleNewsletterSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      await fetch("/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: newsletterEmail }),
-      });
-      alert("Successfully subscribed to our newsletter!");
-      setNewsletterEmail("");
-    } catch (error) {
-      console.error("Error subscribing to newsletter:", error);
-    }
-  };
-
   return (
     <section id="contact" className="py-16 sm:py-20 bg-gradient-to-br from-light-pink/30 to-gold-soft/30" ref={ref}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -123,9 +107,8 @@ export const ContactNewsletter = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-accent-secondary mb-1 text-sm sm:text-base">Address</h4>
                   <p className="text-text-secondary text-sm sm:text-base">
-                    Rajiv Gandhi Salai, OMR<br />
-                    Kottivakkam, Greater Chennai<br />
-                    Chennai, Tamil Nadu<br />
+                    Vidyut Villas, No: 4 Rajeev Street, OMR<br />
+                    Kottivakkam, Chennai<br />
                     600041, India
                   </p>
                 </div>
@@ -146,38 +129,13 @@ export const ContactNewsletter = () => {
                 <div className="flex-1">
                   <h4 className="font-semibold text-terracotta mb-1 text-sm sm:text-base">Phone</h4>
                   <p className="text-text-secondary text-sm sm:text-base">
-                    +91 9751278466<br />
-                    +91 967704466
+                    +91 9751274826<br />
+                    +91 9677404466
                   </p>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-white/85 to-purple-soft/20 p-6 sm:p-8 rounded-3xl border-2 border-purple-soft/30 shadow-xl">
-              <h4 className="text-lg sm:text-xl font-serif font-bold text-deep-purple mb-4">
-                Subscribe to Newsletter
-              </h4>
-              <p className="text-text-secondary mb-6 text-sm sm:text-base">
-                Get the latest updates, offers, and health tips delivered to your inbox.
-              </p>
-              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  value={newsletterEmail}
-                  onChange={(e) => setNewsletterEmail(e.target.value)}
-                  className="flex-1 px-4 sm:px-5 py-3 bg-bg-secondary border-2 border-purple-soft/30 rounded-full text-text-primary placeholder-text-muted focus:outline-none focus:border-deep-purple transition-all text-sm sm:text-base"
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-gradient-to-r from-deep-purple to-terracotta text-background rounded-full font-semibold hover:from-terracotta hover:to-accent-primary transition-all flex items-center justify-center gap-2 shadow-glow-purple text-sm sm:text-base"
-                >
-                  <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                  Subscribe
-                </button>
-              </form>
-            </div>
           </motion.div>
 
           <motion.div
@@ -189,7 +147,7 @@ export const ContactNewsletter = () => {
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-terracotta mb-6 sm:mb-8">
                 Send us a Message
               </h3>
-              <form ref={contactFormRef} onSubmit={handleContactSubmit} className="space-y-5 sm:space-y-6" noValidate>
+              <form id="contact-form" name="contact-form" ref={contactFormRef} onSubmit={handleContactSubmit} className="space-y-5 sm:space-y-6" noValidate>
                 <div>
                   <label className="block text-text-secondary mb-2 text-sm font-medium" htmlFor="contact-name">
                     Your Name
@@ -243,6 +201,7 @@ export const ContactNewsletter = () => {
                 </div>
                 <button
                   type="submit"
+                  form="contact-form"
                   disabled={
                     contactLoading ||
                     !formData.name.trim() ||
@@ -292,7 +251,7 @@ export const ContactNewsletter = () => {
               <div className="rounded-3xl overflow-hidden shadow-2xl border-2 border-accent-primary/30">
                 <iframe
                   title="Google Map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15546.837683473355!2d80.23968055!3d12.93904875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525c9e7c3e8e3d%3A0x6c9f3c7d3b6a2e1f!2sKottivakkam%2C%20Rajiv%20Gandhi%20Salai%2C%20OMR%2C%20Chennai%2C%20Tamil%20Nadu%20600041!5e0!3m2!1sen!2sin!4v1721900000000!5m2!1sen!2sin"
+                  src="https://maps.google.com/maps?q=12.9763543,80.2521209&z=17&output=embed"
                   width="100%"
                   height="350"
                   style={{ border: 0 }}
@@ -319,16 +278,15 @@ export const ContactNewsletter = () => {
                   <div className="flex-1">
                     <h4 className="font-semibold text-accent-secondary mb-1 text-base sm:text-lg">Complete Address</h4>
                     <p className="text-text-secondary text-sm sm:text-base">
-                      Rajiv Gandhi Salai, OMR<br />
-                      Kottivakkam, Greater Chennai<br />
-                      Chennai, Tamil Nadu<br />
+                      Vidyut Villas, No: 4 Rajeev Street, OMR<br />
+                      Kottivakkam, Chennai<br />
                       600041, India
                     </p>
                   </div>
                 </div>
 
                 <a
-                  href="https://www.google.com/maps/dir/?api=1&destination=12.9391,80.2433"
+                  href="https://maps.app.goo.gl/Vtp2nmo3sESZtXqW9"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-accent-primary to-terracotta text-white rounded-full font-semibold hover:from-terracotta hover:to-deep-purple transition-all shadow-glow-terracotta text-base sm:text-lg w-full sm:w-auto"

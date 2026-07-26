@@ -79,8 +79,8 @@ export const Footer = () => {
               <div className="flex items-start gap-3">
                 <Phone className="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div className="text-sm sm:text-base">
-                  <p>+91 9751278466</p>
-                  <p>+91 967704466</p>
+                  <p>+91 9751274826</p>
+                  <p>+91 9677404466</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -90,9 +90,8 @@ export const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 sm:w-5 sm:h-5 mt-0.5 sm:mt-1 flex-shrink-0" />
                 <div className="text-sm sm:text-base">
-                  <p>Rajiv Gandhi Salai, OMR,</p>
-                  <p>Kottivakkam, Greater Chennai,</p>
-                  <p>Chennai, Tamil Nadu,</p>
+                  <p>Vidyut Villas, No: 4 Rajeev Street, OMR,</p>
+                  <p>Kottivakkam, Chennai,</p>
                   <p>600041</p>
                 </div>
               </div>
