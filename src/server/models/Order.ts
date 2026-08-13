@@ -38,4 +38,4 @@ const OrderSchema: Schema = new Schema({
   status: { type: String, default: 'pending', enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'] },
 }, { timestamps: true });
 
-export default mongoose.model<IOrder>('Order', OrderSchema);
+export default mongoose.models.Order || mongoose.model<IOrder>('Order', OrderSchema);

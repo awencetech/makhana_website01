@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { AboutVeltrix } from "@/components/AboutVeltrix";
 import { QualityJourney } from "@/components/QualityJourney";
 import { WhyChooseVeltrix } from "@/components/WhyChooseVeltrix";
-import { Testimonials } from "@/components/Testimonials";
+import { CustomerFeedback } from "@/components/CustomerFeedback";
 import { ContactNewsletter } from "@/components/ContactNewsletter";
 
 export default function Home() {
@@ -16,7 +16,7 @@ export default function Home() {
       <AboutVeltrix />
       <QualityJourney />
       <WhyChooseVeltrix />
-      <Testimonials />
+      <CustomerFeedback />
       <ContactNewsletter />
       <Footer />
     </main>

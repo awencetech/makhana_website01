@@ -14,4 +14,4 @@ const ContactSubmissionSchema: Schema = new Schema({
   timestamps: true
 });
 
-export default mongoose.model<IContactSubmission>('ContactSubmission', ContactSubmissionSchema);
+export default mongoose.models.ContactSubmission || mongoose.model<IContactSubmission>('ContactSubmission', ContactSubmissionSchema);

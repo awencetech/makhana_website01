@@ -6,7 +6,7 @@ dotenv.config();
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   PORT: z.coerce.number().default(5000),
-  MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
+  MONGODB_URI: z.string().optional(),
   EMAIL_HOST: z.string().optional(),
   EMAIL_PORT: z.coerce.number().optional(),
   EMAIL_USER: z.string().optional(),

@@ -4,6 +4,7 @@ import Order from '../models/Order';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 import { env } from '../env';
+import { hasDB } from '../dbUtils';
 
 const router = express.Router();
 
@@ -24,17 +25,44 @@ const OrderSchema = z.object({
   totalPrice: z.coerce.number().positive(),
 });
 
-// Create a new order and send notifications
+interface MockOrder {
+  _id: string;
+  customerName: string;
+  email: string;
+  phone: string;
+  address: string;
+  items: z.infer<typeof OrderItemSchema>[];
+  totalPrice: number;
+  createdAt: Date;
+}
+
+let inMemoryOrders: MockOrder[] = [];
+
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const validated = OrderSchema.parse(req.body);
     const { customerName, email, phone, address, items, totalPrice } = validated;
 
-    // 1. Save order to MongoDB FIRST (most important!)
-    const order = new Order(validated);
-    const savedOrder = await order.save();
+    let orderId: string;
+    let savedOrder: any = null;
 
-    const orderIdShort = savedOrder._id.toString().slice(-8);
+    if (hasDB()) {
+      const order = new Order(validated);
+      savedOrder = await order.save();
+      orderId = savedOrder._id.toString();
+    } else {
+      orderId = `ORDER-${Date.now()}`;
+      const mockOrder: MockOrder = {
+        _id: orderId,
+        ...validated,
+        createdAt: new Date(),
+      };
+      inMemoryOrders.unshift(mockOrder);
+      console.warn('⚠️ No DB connected — order stored in-memory only:', mockOrder);
+    }
+
+    const orderIdShort = orderId.slice(-8);
+
     const orderItemsHtml = items.map((item) => `
       <tr>
         <td>${item.name}</td>
@@ -50,7 +78,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
       `- ${item.grade} (${item.size}) x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}`
     ).join('\n');
 
-    // 2. Send Email Notifications (don't fail order if notifications fail)
     try {
       if (env.EMAIL_USER && env.EMAIL_PASS) {
         const transporter = nodemailer.createTransport({
@@ -63,7 +90,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
           },
         });
 
-        // Email to admin
         if (env.ADMIN_EMAIL) {
           await transporter.sendMail({
             from: `"Veltrix Orders" <${env.EMAIL_USER}>`,
@@ -92,12 +118,11 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
                 <tbody>${orderItemsHtml}</tbody>
               </table>
               <h3>Total: ₹${totalPrice.toFixed(2)}</h3>
-              <p>Order ID: ${savedOrder._id}</p>
+              <p>Order ID: ${orderId}</p>
             `,
           });
         }
 
-        // Email to customer
         await transporter.sendMail({
           from: `"Veltrix Global Trading" <${env.EMAIL_USER}>`,
           to: email,
@@ -130,7 +155,6 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
       console.warn('Failed to send email notifications:', emailError);
     }
 
-    // 3. Send WhatsApp Notification (don't fail order if notifications fail)
     try {
       if (env.TWILIO_ACCOUNT_SID && env.TWILIO_AUTH_TOKEN && env.TWILIO_WHATSAPP_FROM && env.ADMIN_WHATSAPP_NUMBER) {
         const client = twilio(env.TWILIO_ACCOUNT_SID, env.TWILIO_AUTH_TOKEN);
@@ -160,7 +184,7 @@ Order ID: #${orderIdShort}
       console.warn('Failed to send WhatsApp notification:', whatsappError);
     }
 
-    res.status(201).json({ success: true, orderId: savedOrder._id });
+    res.status(201).json({ success: true, orderId });
   } catch (error) {
     next(error);
   }

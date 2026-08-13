@@ -10,4 +10,4 @@ const NewsletterSignupSchema: Schema = new Schema({
   timestamps: true
 });
 
-export default mongoose.model<INewsletterSignup>('NewsletterSignup', NewsletterSignupSchema);
+export default mongoose.models.NewsletterSignup || mongoose.model<INewsletterSignup>('NewsletterSignup', NewsletterSignupSchema);
