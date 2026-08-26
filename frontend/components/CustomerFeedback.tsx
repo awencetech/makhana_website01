@@ -4,6 +4,8 @@ import { useRef, useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import axios from "axios";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "";
+
 interface Review {
   _id: string;
   name: string;
@@ -37,7 +39,7 @@ export const CustomerFeedback = () => {
   const fetchReviews = async () => {
     try {
       setReviewsLoading(true);
-      const response = await axios.get("/api/reviews");
+      const response = await axios.get(`${API_BASE_URL}/api/reviews`);
       setReviews(response.data.data || []);
     } catch (err) {
       console.error("Failed to fetch reviews:", err);
@@ -69,7 +71,7 @@ export const CustomerFeedback = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("/api/reviews", {
+      const response = await axios.post(`${API_BASE_URL}/api/reviews`, {
         name: name.trim(),
         rating,
         feedback: feedback.trim(),

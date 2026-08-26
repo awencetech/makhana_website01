@@ -34,3 +34,5 @@ npm run dev
 ```
 
 Keep browser-only logic in client components or hooks, and keep secrets in environment files rather than in frontend code. Public environment variables must use the `NEXT_PUBLIC_` prefix.
+
+For a separate Render backend, set `NEXT_PUBLIC_API_URL` in the frontend deployment environment to the Render service URL, for example `https://your-backend.onrender.com`. If it is not set, the app uses its local `/api` bridge.
