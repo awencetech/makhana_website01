@@ -4,7 +4,9 @@ import { useRef, useState, useEffect } from "react";
 import { Star } from "lucide-react";
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") || "";
+const API_BASE_URL = (
+  process.env.NEXT_PUBLIC_API_URL || "https://makhana-website-faue.onrender.com"
+).replace(/\/$/, "");
 
 interface Review {
   _id: string;
