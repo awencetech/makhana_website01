@@ -33,7 +33,8 @@ const ReviewSchema: Schema = new Schema({
     default: Date.now 
   }
 }, {
-  timestamps: true
+  timestamps: true,
+  collection: 'reviews',
 });
 
 export default mongoose.models.Review || mongoose.model<IReview>('Review', ReviewSchema);

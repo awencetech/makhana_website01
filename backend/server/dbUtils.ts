@@ -63,6 +63,7 @@ export async function connectDB() {
   const opts = {
     bufferCommands: false,
     maxPoolSize: isProduction ? 10 : 1,
+    dbName: env.MONGODB_DB_NAME,
   };
 
   try {
