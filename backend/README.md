@@ -20,7 +20,7 @@ See [database/schema.md](database/schema.md) for the collection design and relat
 
 ## Environment
 
-Configure all backend environment values in `backend/.env.production`. Keep this file private and use Render's Environment settings when deploying. Set `MONGODB_URI` to enable MongoDB. Reviews are saved in the `reviews` database and `reviews` collection by default; set `MONGODB_DB_NAME` only when using a different database. When MongoDB is missing or unavailable, the application uses its existing in-memory fallback behavior for supported routes.
+Configure all backend environment values in `backend/.env.production`. Keep this file private and use Render's Environment settings when deploying. Set `MONGODB_URI` to enable MongoDB. Reviews are saved in the `main` database and `reviews` collection by default; set `MONGODB_DB_NAME` only when using a different database. When MongoDB is missing or unavailable, the application uses its existing in-memory fallback behavior for supported routes.
 
 Do not commit secrets or local database credentials. Keep environment-specific values in `.env.local` or the deployment environment.
 
