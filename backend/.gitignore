@@ -1,0 +1,12 @@
+# Backend dependencies and generated output
+node_modules/
+dist/
+coverage/
+
+# Backend environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
