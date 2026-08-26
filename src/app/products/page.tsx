@@ -54,7 +54,7 @@ const ProductImage = ({ src, alt, imageIndex, sectionIndex, scrollYProgress }: P
 const gradeSections = [
   {
     grade: "1st Grade",
-    title: "Premium Standard Quality",
+    title: "Premium Export Quality",
     images: [
       { src: "/makhana1.jpg", alt: "Premium Standard 1" },
       { src: "/makhana8.png", alt: "Premium Standard 8" },
@@ -63,7 +63,7 @@ const gradeSections = [
   },
   {
     grade: "2nd Grade",
-    title: "Premium Export Quality",
+    title: "Premium Standard Quality",
     images: [
       { src: "/makhana2.jpg", alt: "Premium Export 2" },
       { src: "/makhana9.png", alt: "Premium Export 9" },
