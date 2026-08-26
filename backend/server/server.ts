@@ -71,6 +71,10 @@ app.use(cors({
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 
+app.get('/health', (_req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // DB middleware - ensure connection (non-blocking, no per-request seeding)
 app.use(async (req, res, next) => {
   try {

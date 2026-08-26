@@ -23,3 +23,13 @@ See [database/schema.md](database/schema.md) for the collection design and relat
 Copy `backend/.env.example` to `backend/.env.local` and fill in the required values. Set `MONGODB_URI` to enable MongoDB. When it is missing or unavailable, the application uses its existing in-memory fallback behavior for supported routes.
 
 Do not commit secrets or local database credentials. Keep environment-specific values in `.env.local` or the deployment environment.
+
+## Deploy On Render
+
+Create a Render Web Service using the repository root as the root directory:
+
+- Build command: `npm install`
+- Start command: `npm run backend:start`
+- Health check path: `/health`
+
+Add `MONGODB_URI` and any notification credentials in Render's environment settings. Render supplies `PORT` automatically; the server binds to that value.
