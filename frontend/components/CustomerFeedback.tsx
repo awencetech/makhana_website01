@@ -77,9 +77,8 @@ export const CustomerFeedback = () => {
         feedback: feedback.trim(),
       });
 
-      // Add new review to the list
-      const newReview = response.data.data;
-      setReviews([newReview, ...reviews]);
+      // Reload from MongoDB so the UI reflects the persisted document.
+      await fetchReviews();
 
       // Reset form
       setName("");

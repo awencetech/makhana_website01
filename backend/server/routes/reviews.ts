@@ -49,6 +49,13 @@ router.post('/', async (req: Request, res: Response) => {
       });
     }
 
+    if (process.env.MONGODB_URI) {
+      return res.status(503).json({
+        error: 'Database unavailable',
+        message: 'Review was not saved. Please try again shortly.',
+      });
+    }
+
     const newReview: MockReview = {
       _id: `inmem-${Date.now()}`,
       name: validatedData.name,
@@ -88,6 +95,13 @@ router.get('/', async (req: Request, res: Response) => {
       return res.status(200).json({
         success: true,
         data: reviews,
+      });
+    }
+
+    if (process.env.MONGODB_URI) {
+      return res.status(503).json({
+        error: 'Database unavailable',
+        message: 'Reviews are temporarily unavailable.',
       });
     }
 

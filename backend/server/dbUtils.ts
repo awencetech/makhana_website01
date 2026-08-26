@@ -34,6 +34,7 @@ export const SEED_PRODUCTS = [
 let cachedDb: typeof mongoose | null = null;
 let dbReady = false;
 let seedDone = false;
+let dbError: Error | null = null;
 
 export async function seedProducts() {
   if (seedDone || !cachedDb) return;
@@ -60,6 +61,10 @@ export async function connectDB() {
     return null;
   }
 
+  if (dbError) {
+    throw dbError;
+  }
+
   const opts = {
     bufferCommands: false,
     maxPoolSize: isProduction ? 10 : 1,
@@ -73,9 +78,10 @@ export async function connectDB() {
     await seedProducts();
     return cachedDb;
   } catch (e) {
-    console.warn('⚠️ MongoDB connection failed — running in fallback mode:', e instanceof Error ? e.message : e);
+    dbError = e instanceof Error ? e : new Error('MongoDB connection failed');
     dbReady = true;
-    return null;
+    console.error('❌ MongoDB connection failed:', dbError.message);
+    throw dbError;
   }
 }
 
