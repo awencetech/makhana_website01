@@ -24,6 +24,7 @@
     "gsap": "^3.12.5",
     "helmet": "^8.3.0",
     "lucide-react": "^0.468.0",
+    "mongodb": "^7.6.0",
     "mongoose": "^8.5.1",
     "next": "16.2.11",
     "nodemailer": "^9.0.3",
