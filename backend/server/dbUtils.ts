@@ -79,6 +79,7 @@ export async function connectDB() {
     return cachedDb;
   } catch (e) {
     dbError = e instanceof Error ? e : new Error('MongoDB connection failed');
+    Object.assign(dbError, { statusCode: 503 });
     dbReady = true;
     console.error('❌ MongoDB connection failed:', dbError.message);
     throw dbError;

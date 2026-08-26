@@ -93,6 +93,7 @@ export const CustomerFeedback = () => {
         err.response?.data?.details?.name?.[0] ||
         err.response?.data?.details?.rating?.[0] ||
         err.response?.data?.details?.feedback?.[0] ||
+        err.response?.data?.message ||
         err.response?.data?.error ||
         "Failed to submit review";
       setError(errorMsg);
