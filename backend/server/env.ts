@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import dotenv from 'dotenv';
 
-dotenv.config({ path: 'backend/.env.local' });
+dotenv.config({ path: 'backend/.env.production' });
 dotenv.config();
 
 const envSchema = z.object({

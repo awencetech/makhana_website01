@@ -20,7 +20,7 @@ See [database/schema.md](database/schema.md) for the collection design and relat
 
 ## Environment
 
-Copy `backend/.env.example` to `backend/.env.local` and fill in the required values. Set `MONGODB_URI` to enable MongoDB. When it is missing or unavailable, the application uses its existing in-memory fallback behavior for supported routes.
+Configure all backend environment values in `backend/.env.production`. Keep this file private and use Render's Environment settings when deploying. Set `MONGODB_URI` to enable MongoDB. When it is missing or unavailable, the application uses its existing in-memory fallback behavior for supported routes.
 
 Do not commit secrets or local database credentials. Keep environment-specific values in `.env.local` or the deployment environment.
 
@@ -32,4 +32,4 @@ Create a Render Web Service using the repository root as the root directory:
 - Start command: `npm run backend:start`
 - Health check path: `/health`
 
-Add `MONGODB_URI` and any notification credentials in Render's environment settings. Render supplies `PORT` automatically; the server binds to that value.
+Add the variables from `backend/.env.production` in Render's Environment settings. Render supplies `PORT` automatically; the server binds to that value. Do not upload `.env.production` to Git.
